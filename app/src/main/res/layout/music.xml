@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MusicActivity"
+    android:id="@+id/drag_layer">
+
+    <include
+        android:id="@+id/music_player"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        layout="@layout/music_player">
+    </include>
+
+    <include
+        android:id="@+id/music_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        layout="@layout/music_list">
+    </include>
+
+</android.support.constraint.ConstraintLayout>

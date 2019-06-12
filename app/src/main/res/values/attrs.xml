@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+     <declare-styleable name="LrcView">
+        <attr name="lrcMode" format="enum">
+            <enum name="KARAOKE" value="1"/>
+        </attr>
+        <attr name="hignLineColor" format="color|reference"/>
+        <attr name="lrcColor" format="color|reference"/>
+    </declare-styleable>
+    <declare-styleable name="CustomAudioIcon">
+        <attr name="type">
+            <enum name="start" value="0" />
+            <enum name="forward" value="1" />
+            <enum name="backward" value="2" />
+            <enum name="exit" value="3" />
+            <enum name="mode" value="4" />
+        </attr>
+        <attr name="mycolor" format="color"/>
+    </declare-styleable>
+
+
+
+    <declare-styleable name="RoundImageView">
+        <attr name="borderRadius" format="dimension" />
+	    <attr name="img_type">
+	        <enum name="circle" value="0" />
+	        <enum name="round" value="1" />
+	    </attr>
+    </declare-styleable>
+
+
+    <declare-styleable name="CircleImageView">
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="color" />
+        <attr name="border_overlay" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="HorizontalListView">
+        <attr name="dividerWidth" format="dimension" />
+        <attr name="android:divider" />
+        <attr name="android:requiresFadingEdge" />
+        <attr name="android:fadingEdgeLength" />
+    </declare-styleable>
+
+    <declare-styleable name="SmoothCheckBox">
+        <attr name="duration" format="integer"/>
+        <attr name="stroke_width" format="dimension"/>
+        <attr name="color_tick" format="color"/>
+        <attr name="color_checked" format="color"/>
+        <attr name="color_unchecked" format="color"/>
+        <attr name="color_unchecked_stroke" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="Knob">
+        <attr name="label" format="string" />
+        <attr name="background1" format="integer" />
+        <attr name="foreground" format="integer" />
+    </declare-styleable>
+</resources>

@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Music</string>
+    <string name="streamloadingtext">Connecting to %s\u2026</string>
+    <string name="playback_failed">The player doesn\'t support this type of audio file.</string>
+    <string name="error">Too many error files, please check whether the file format is supported.</string>
+    <string name="unknown">Unknown</string>
+    <string name="default_current_time">00:00</string>
+    <string name="default_Total_time">00:00</string>
+    <string name="eq">EQ</string>
+    <string name="playlist">Playlist</string>
+    <string name="sd">extSD</string>
+    <string name="usb">USB</string>
+    <string name="media">iNand</string>
+    <string name="artist">Artist: </string>
+    <string name="album">Album: </string>
+    <string name="song">Song: </string>
+    <string name="vertical_line">|</string>
+    <string name="noplay">This music is corrupt and cannot be played.</string>
+    <string name="love">Collection</string>
+    <string name="nolrc">No lyric</string>
+</resources>

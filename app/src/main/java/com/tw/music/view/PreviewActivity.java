@@ -24,7 +24,6 @@ public class PreviewActivity extends BaseActivity implements Contarct.View{
 	private TextView mTitle; //歌曲
 	private TextView mArtist; //专辑
 	private SeekBar mSeekBar; //播放进度条
-	private ProgressBar pb; //加载进度条
 	private TextView mLoadingText; //提示信息
 	private boolean isPlayPause = false;
 	
@@ -48,7 +47,6 @@ public class PreviewActivity extends BaseActivity implements Contarct.View{
 		mArtist = (TextView) findViewById(R.id.line2);
 		mSeekBar = (SeekBar) findViewById(R.id.progress);
 		mSeekBar.setOnSeekBarChangeListener(mSeekListener);
-		pb = (ProgressBar) findViewById(R.id.spinner);
 		mLoadingText = (TextView) findViewById(R.id.loading);
 	}
 
@@ -98,9 +96,6 @@ public class PreviewActivity extends BaseActivity implements Contarct.View{
 
 	@Override
 	public void onPrepared() {
-		pb.setVisibility(View.GONE);
-		View v = findViewById(R.id.titleandbuttons);
-		v.setVisibility(View.VISIBLE);
 		mSeekBar.setVisibility(View.VISIBLE);
 	}
 	@Override

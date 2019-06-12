@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MusicActivity"
     android:paddingLeft="55dp"
+    android:paddingTop="25dp"
     android:paddingRight="55dp"
-    android:paddingTop="25dp">
+    tools:context=".MusicActivity">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -51,22 +51,24 @@
     </LinearLayout>
 
 
-        <TextView
-            android:id="@+id/song"
-            android:layout_width="wrap_content"
-            android:layout_height="64dp"
-            android:ellipsize="end"
-            android:gravity="center_vertical"
-            android:singleLine="true"
-            android:textColor="#ffffff"
-            android:textSize="35dip"
-            android:text="歌曲"
-            app:layout_constraintLeft_toRightOf="@+id/linearLayout" />
+    <TextView
+        android:id="@+id/song"
+        android:layout_width="wrap_content"
+        android:layout_height="64dp"
+        android:layout_marginLeft="30dip"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:singleLine="true"
+        android:text="歌曲"
+        android:textColor="#ffffff"
+        android:textSize="35dip"
+        app:layout_constraintLeft_toRightOf="@+id/linearLayout" />
 
     <LinearLayout
         android:id="@+id/ll_artist"
         android:layout_width="wrap_content"
         android:layout_height="38dip"
+        android:layout_marginLeft="30dip"
         app:layout_constraintLeft_toRightOf="@+id/linearLayout"
         app:layout_constraintTop_toBottomOf="@+id/song">
 
@@ -82,39 +84,42 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="10dip"
             android:ellipsize="end"
-            android:text="歌手"
             android:gravity="center_vertical"
             android:singleLine="true"
+            android:text="歌手"
             android:textColor="#ffffff"
             android:textSize="20dip" />
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/ll_album"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="38dip"
+        android:layout_marginLeft="30dip"
         app:layout_constraintLeft_toRightOf="@+id/linearLayout"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ll_artist">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:scaleType="center"
-        android:src="@mipmap/albumart" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:scaleType="center"
+            android:src="@mipmap/albumart" />
 
-    <TextView
-        android:id="@+id/album"
-        android:layout_width="wrap_content"
-        android:layout_height="38dp"
-        android:layout_marginLeft="10dip"
-        android:ellipsize="end"
-        android:layout_marginRight="15dip"
-        android:gravity="center_vertical"
-        android:singleLine="true"
-        android:textColor="#ffffff"
-        android:text="专辑"
-        android:textSize="20dip"
-        app:layout_constraintLeft_toRightOf="@+id/linearLayout"
-        app:layout_constraintTop_toBottomOf="@+id/artist"/>
+        <TextView
+            android:id="@+id/album"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="15dip"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:text="专辑"
+            android:textColor="#ffffff"
+            android:textSize="20dip"
+            app:layout_constraintLeft_toRightOf="@+id/linearLayout"
+            app:layout_constraintTop_toBottomOf="@+id/artist" />
 
         <ImageView
             android:id="@+id/iv_fx"
@@ -129,41 +134,44 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:onClick="onClick"
             android:layout_marginLeft="6dp"
-            android:visibility="gone"
-            android:src="@drawable/selector_btn_lrc"/>
+            android:onClick="onClick"
+            android:src="@drawable/selector_btn_lrc"
+            android:visibility="gone" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll_fx"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="30dip"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/ll_seekbar"
         app:layout_constraintLeft_toRightOf="@+id/linearLayout"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ll_album"
-        app:layout_constraintVertical_bias="0.5"
-        >
-    </LinearLayout>
+        app:layout_constraintVertical_bias="0.5"></LinearLayout>
 
     <com.tw.music.utils.lrc.LrcView
         android:id="@+id/lrc_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="30dip"
         app:layout_constraintBottom_toTopOf="@+id/ll_seekbar"
         app:layout_constraintLeft_toRightOf="@+id/linearLayout"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ll_album"
-        app:layout_constraintVertical_bias="0.5"
         app:lrcMode="KARAOKE" />
+
     <LinearLayout
         android:id="@+id/ll_seekbar"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toRightOf="@+id/linearLayout"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        android:gravity="center" >
+        app:layout_constraintLeft_toRightOf="@+id/linearLayout"
+        app:layout_constraintRight_toRightOf="parent">
 
         <TextView
             android:id="@+id/currenttime"
@@ -178,7 +186,7 @@
 
         <SeekBar
             android:id="@+id/progress"
-            android:layout_width="470dp"
+            android:layout_width="380dp"
             android:layout_height="wrap_content"
             android:maxHeight="4.0dip"
             android:minHeight="4.0dip"

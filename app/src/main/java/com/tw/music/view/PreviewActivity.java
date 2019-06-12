@@ -15,6 +15,7 @@ import com.tw.music.activity.BaseActivity;
 import com.tw.music.contarct.Contarct;
 import com.tw.music.contarct.Contarct.prePresenter;
 import com.tw.music.presenter.PreviewPresenter;
+import com.tw.music.utils.lrc.LrcView;
 
 public class PreviewActivity extends BaseActivity implements Contarct.View{
 	private static final String TAG = "PreviewActivity";
@@ -26,6 +27,7 @@ public class PreviewActivity extends BaseActivity implements Contarct.View{
 	private SeekBar mSeekBar; //播放进度条
 	private TextView mLoadingText; //提示信息
 	private boolean isPlayPause = false;
+	public static LrcView lrc_view; //歌词
 	
 	@Override
 	public void initView() {
@@ -48,6 +50,7 @@ public class PreviewActivity extends BaseActivity implements Contarct.View{
 		mSeekBar = (SeekBar) findViewById(R.id.progress);
 		mSeekBar.setOnSeekBarChangeListener(mSeekListener);
 		mLoadingText = (TextView) findViewById(R.id.loading);
+		lrc_view = (LrcView) findViewById(R.id.lrc_view);
 	}
 
 	@Override

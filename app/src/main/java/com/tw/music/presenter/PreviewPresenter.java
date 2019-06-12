@@ -2,7 +2,9 @@ package com.tw.music.presenter;
 
 import java.io.IOException;
 
+import com.tw.music.MusicActivity;
 import com.tw.music.contarct.Contarct;
+import com.tw.music.utils.lrc.LrcTranscoding;
 
 import android.app.Activity;
 import android.content.AsyncQueryHandler;
@@ -75,6 +77,7 @@ public class PreviewPresenter implements Contarct.prePresenter,OnPreparedListene
 			mPlayer.setActivity(this);
 			try {
 				mPlayer.setDataSourceAndPrepare(mUri);
+				Log.i("md","mUri: "+mUri);
 				mProgressRefresher.postDelayed(new ProgressRefresher(), 1000);
 			} catch (Exception ex) {
 				// catch generic Exception, since we may be called with a media
@@ -144,6 +147,7 @@ public class PreviewPresenter implements Contarct.prePresenter,OnPreparedListene
 			// check if this file is in the media database (clicking on a download
 			// in the download manager might follow this path
 			String path = mUri.getPath();
+			getCurrentLrc(path);
 			mAsyncQueryHandler.startQuery(0, null,  MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
 					new String [] {MediaStore.Audio.Media._ID,
 					MediaStore.Audio.Media.TITLE, MediaStore.Audio.Media.ARTIST},
@@ -153,7 +157,22 @@ public class PreviewPresenter implements Contarct.prePresenter,OnPreparedListene
 			// that API is hidden, so instead we display the URI being played
 		}
 	}
-
+	private String getCurrentLrc(String path){
+		try {
+			if (path != null) {
+				path = path.substring(0, path.lastIndexOf("."))+".lrc";
+				MusicActivity.lrc_view.setLrc(LrcTranscoding.converfile(path));
+				MusicActivity.lrc_view.setPlayer(mPlayer);
+				MusicActivity.lrc_view.setMode(0);
+				MusicActivity.lrc_view.init();
+				return path;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			Log.i("md","e  "+e.toString());
+		}
+		return path;
+	}
 	@Override
 	public void setSeekBar(int progress) {
 		mPlayer.seekTo(progress);

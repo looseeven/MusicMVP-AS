@@ -5,7 +5,6 @@ import android.media.AudioManager;
 import android.net.Uri;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
@@ -15,7 +14,7 @@ import com.tw.music.activity.BaseActivity;
 import com.tw.music.contarct.Contarct;
 import com.tw.music.contarct.Contarct.prePresenter;
 import com.tw.music.presenter.PreviewPresenter;
-import com.tw.music.utils.lrc.LrcView;
+import com.tw.music.lrc.LrcView;
 
 public class PreviewActivity extends BaseActivity implements Contarct.View{
 	private static final String TAG = "PreviewActivity";

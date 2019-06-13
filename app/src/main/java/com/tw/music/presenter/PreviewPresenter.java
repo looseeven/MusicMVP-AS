@@ -2,9 +2,9 @@ package com.tw.music.presenter;
 
 import java.io.IOException;
 
-import com.tw.music.MusicActivity;
 import com.tw.music.contarct.Contarct;
-import com.tw.music.utils.lrc.LrcTranscoding;
+import com.tw.music.lrc.LrcTranscoding;
+import com.tw.music.view.PreviewActivity;
 
 import android.app.Activity;
 import android.content.AsyncQueryHandler;
@@ -17,19 +17,14 @@ import android.media.AudioManager.OnAudioFocusChangeListener;
 import android.media.MediaPlayer.OnErrorListener;
 import android.media.MediaPlayer.OnPreparedListener;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Toast;
 
 
 public class PreviewPresenter implements Contarct.prePresenter,OnPreparedListener, OnErrorListener{
-    private Contarct.View PreView;
+	private Contarct.View PreView;
 	private PreviewPlayer mPlayer;
 	private static final String TAG = "PreviewPresenter";
 	public static String scheme;
@@ -40,21 +35,21 @@ public class PreviewPresenter implements Contarct.prePresenter,OnPreparedListene
 	private int mDuration;
 	static Context mContext;
 	private boolean isOnDestroy = false;
-	
-    public PreviewPresenter(Contarct.View View) {
-    	PreView = View;
-    	PreView.setPresenter(this);
-    }
 
-    @Override
-    public void onstart(Context c) {
-    	isOnDestroy = true;
-    	mContext = c;
-    }
-    
-    @Override
+	public PreviewPresenter(Contarct.View View) {
+		PreView = View;
+		PreView.setPresenter(this);
+	}
+
+	@Override
+	public void onstart(Context c) {
+		isOnDestroy = true;
+		mContext = c;
+	}
+
+	@Override
 	public boolean onError(MediaPlayer mp, int what, int extra) {
-    	PreView.showError();
+		PreView.showError();
 		return false;
 	}
 
@@ -68,7 +63,7 @@ public class PreviewPresenter implements Contarct.prePresenter,OnPreparedListene
 
 	@Override
 	public void setUri(Uri mUri) {
-    	mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
+		mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
 		PreviewPlayer player = (PreviewPlayer)((Activity) mContext).getLastNonConfigurationInstance();
 		mProgressRefresher = new Handler();
 		scheme = mUri.getScheme();
@@ -77,7 +72,7 @@ public class PreviewPresenter implements Contarct.prePresenter,OnPreparedListene
 			mPlayer.setActivity(this);
 			try {
 				mPlayer.setDataSourceAndPrepare(mUri);
-				Log.i("md","mUri: "+mUri);
+				Log.i("md","mUri: "+mUri+"  "+scheme);
 				mProgressRefresher.postDelayed(new ProgressRefresher(), 1000);
 			} catch (Exception ex) {
 				// catch generic Exception, since we may be called with a media
@@ -95,7 +90,7 @@ public class PreviewPresenter implements Contarct.prePresenter,OnPreparedListene
 				showPostPrepareUI();
 			}
 		}
-		
+
 		AsyncQueryHandler mAsyncQueryHandler = new AsyncQueryHandler(mContext.getContentResolver()) {
 			@Override
 			protected void onQueryComplete(int token, Object cookie, Cursor cursor) {
@@ -105,7 +100,7 @@ public class PreviewPresenter implements Contarct.prePresenter,OnPreparedListene
 					int albumIdx = cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM);
 					int idIdx = cursor.getColumnIndex(MediaStore.Audio.Media._ID);
 					int displaynameIdx = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
-					
+
 					if (idIdx >=0) {
 						mMediaId = cursor.getLong(idIdx);
 					}
@@ -135,7 +130,7 @@ public class PreviewPresenter implements Contarct.prePresenter,OnPreparedListene
 			if (mUri.getAuthority() == MediaStore.AUTHORITY) {
 				// try to get title and artist from the media content provider
 				mAsyncQueryHandler.startQuery(0, null, mUri, new String [] {
-						MediaStore.Audio.Media.TITLE, MediaStore.Audio.Media.ARTIST},
+								MediaStore.Audio.Media.TITLE, MediaStore.Audio.Media.ARTIST},
 						null, null, null);
 			} else {
 				// Try to get the display name from another content provider.
@@ -147,24 +142,25 @@ public class PreviewPresenter implements Contarct.prePresenter,OnPreparedListene
 			// check if this file is in the media database (clicking on a download
 			// in the download manager might follow this path
 			String path = mUri.getPath();
-			getCurrentLrc(path);
 			mAsyncQueryHandler.startQuery(0, null,  MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
 					new String [] {MediaStore.Audio.Media._ID,
-					MediaStore.Audio.Media.TITLE, MediaStore.Audio.Media.ARTIST},
+							MediaStore.Audio.Media.TITLE, MediaStore.Audio.Media.ARTIST},
 					MediaStore.Audio.Media.DATA + "=?", new String [] {path}, null);
 		} else {
 			// We can't get metadata from the file/stream itself yet, because
 			// that API is hidden, so instead we display the URI being played
 		}
+		String path = mUri.getPath();
+		getCurrentLrc(path);
 	}
 	private String getCurrentLrc(String path){
 		try {
 			if (path != null) {
 				path = path.substring(0, path.lastIndexOf("."))+".lrc";
-				MusicActivity.lrc_view.setLrc(LrcTranscoding.converfile(path));
-				MusicActivity.lrc_view.setPlayer(mPlayer);
-				MusicActivity.lrc_view.setMode(0);
-				MusicActivity.lrc_view.init();
+				PreviewActivity.lrc_view.setLrc(LrcTranscoding.converfile(path));
+				PreviewActivity.lrc_view.setPlayer(mPlayer);
+				PreviewActivity.lrc_view.setMode(0);
+				PreviewActivity.lrc_view.init();
 				return path;
 			}
 		} catch (Exception e) {
@@ -217,29 +213,29 @@ public class PreviewPresenter implements Contarct.prePresenter,OnPreparedListene
 				return;
 			}
 			switch (focusChange) {
-			case AudioManager.AUDIOFOCUS_LOSS://失去焦点很长时间
-				mPausedByTransientLossOfFocus = false;
-				mPlayer.stop();
-				mPlayer.release();
-				mPlayer=null;
-				break;
-			case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT://暂时失去焦点
-				if (mPlayer.isPlaying()) {
-					mPausedByTransientLossOfFocus = true;
-					mPlayer.pause();
-				}
-				break;
-			case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK://你暂时失去了音频焦点，但你可以小声地继续播放音频（低音量）而不是完全扼杀音频。
-				if (mPlayer.isPlaying())
-					mPlayer.setVolume(1.0f, 1.0f);
-				break;
-			case AudioManager.AUDIOFOCUS_GAIN://得到焦点
-				if (mPausedByTransientLossOfFocus) {
+				case AudioManager.AUDIOFOCUS_LOSS://失去焦点很长时间
 					mPausedByTransientLossOfFocus = false;
-					start();
-					mPlayer.setVolume(1.0f, 1.0f);
-				}
-				break;
+					mPlayer.stop();
+					mPlayer.release();
+					mPlayer=null;
+					break;
+				case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT://暂时失去焦点
+					if (mPlayer.isPlaying()) {
+						mPausedByTransientLossOfFocus = true;
+						mPlayer.pause();
+					}
+					break;
+				case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK://你暂时失去了音频焦点，但你可以小声地继续播放音频（低音量）而不是完全扼杀音频。
+					if (mPlayer.isPlaying())
+						mPlayer.setVolume(1.0f, 1.0f);
+					break;
+				case AudioManager.AUDIOFOCUS_GAIN://得到焦点
+					if (mPausedByTransientLossOfFocus) {
+						mPausedByTransientLossOfFocus = false;
+						start();
+						mPlayer.setVolume(1.0f, 1.0f);
+					}
+					break;
 			}
 		}
 	};
@@ -262,12 +258,12 @@ public class PreviewPresenter implements Contarct.prePresenter,OnPreparedListene
 			mProgressRefresher.postDelayed(new ProgressRefresher(), 1000);
 		}
 	}
-	
+
 	/*
 	 * Wrapper class to help with handing off the MediaPlayer to the next instance
 	 * of the activity in case of orientation change, without losing any state.
 	 */
-	 public static class PreviewPlayer extends MediaPlayer implements OnPreparedListener {
+	public static class PreviewPlayer extends MediaPlayer implements OnPreparedListener {
 		PreviewPresenter mActivity;
 		boolean mIsPrepared = false;
 
@@ -277,7 +273,7 @@ public class PreviewPresenter implements Contarct.prePresenter,OnPreparedListene
 		}
 
 		public void setDataSourceAndPrepare(Uri uri) throws IllegalArgumentException,
-		SecurityException, IllegalStateException, IOException {
+				SecurityException, IllegalStateException, IOException {
 			setDataSource(mContext,uri);
 			prepareAsync();
 		}
@@ -290,11 +286,11 @@ public class PreviewPresenter implements Contarct.prePresenter,OnPreparedListene
 			mIsPrepared = true;
 			mActivity.onPrepared(mp);
 		}
-		
+
 		boolean isPrepared() {
 			return mIsPrepared;
 		}
-	 }
+	}
 
 	@Override
 	public void ondestroy() {
@@ -304,11 +300,11 @@ public class PreviewPresenter implements Contarct.prePresenter,OnPreparedListene
 
 	@Override
 	public void onpause() {
-		
+
 	}
 
 	@Override
 	public void onresume() {
-		
+
 	}
 }

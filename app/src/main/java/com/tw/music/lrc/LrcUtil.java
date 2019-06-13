@@ -1,9 +1,7 @@
-package com.tw.music.utils.lrc;
+package com.tw.music.lrc;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import android.util.Log;
 
 public class LrcUtil {
     /**

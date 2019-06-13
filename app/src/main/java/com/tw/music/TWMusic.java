@@ -48,7 +48,7 @@ public class TWMusic extends TWUtil {
 	public static final int RETURN_MOUNT = 0x9e1f;
 	public static final int NOTIFY_CHANGE = 0xff01;
 	public static final int SHOW_PROGRESS = 0xff02;
-	
+
 	public void requestSource(int source) {
 		write(REQUEST_SOURCE, (1<<7) | (1<<6), source);
 	}

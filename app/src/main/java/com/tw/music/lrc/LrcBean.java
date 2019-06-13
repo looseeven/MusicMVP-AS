@@ -1,4 +1,4 @@
-package com.tw.music.utils.lrc;
+package com.tw.music.lrc;
 
 /**
  * Created by 王松 on 2016/10/20.

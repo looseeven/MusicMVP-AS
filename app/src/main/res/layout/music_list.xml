@@ -18,6 +18,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/selector_btn_bg"
             android:clickable="true"
+            android:onClick="onClick"
             android:drawableTop="@drawable/selector_btn_play_list"
             android:gravity="center_horizontal"
             android:layout_weight="1" />
@@ -29,6 +30,7 @@
             android:layout_marginTop="-2dip"
             android:background="@drawable/selector_btn_bg"
             android:clickable="true"
+            android:onClick="onClick"
             android:drawableTop="@drawable/selector_btn_sd"
             android:gravity="center_horizontal"
             android:layout_weight="1" />
@@ -40,6 +42,7 @@
             android:layout_marginTop="-2dip"
             android:background="@drawable/selector_btn_bg"
             android:clickable="true"
+            android:onClick="onClick"
             android:drawableTop="@drawable/selector_btn_usb"
             android:gravity="center_horizontal"
             android:layout_weight="1" />
@@ -51,6 +54,7 @@
             android:layout_marginTop="-2dip"
             android:background="@drawable/selector_btn_bg"
             android:clickable="true"
+            android:onClick="onClick"
             android:drawableTop="@drawable/selector_btn_wenjian"
             android:gravity="center_horizontal"
             android:layout_weight="1" />
@@ -62,51 +66,46 @@
             android:layout_marginTop="-2dip"
             android:background="@drawable/selector_btn_bg"
             android:clickable="true"
+            android:onClick="onClick"
             android:drawableTop="@drawable/selector_btn_love"
             android:gravity="center_horizontal"
             android:layout_weight="1" />
     </LinearLayout>
     <ListView
         android:id="@+id/list"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:cacheColorHint="@android:color/transparent"
         android:divider="@mipmap/xian"
         android:dividerHeight="1dip"
         android:fadingEdge="none"
         android:listSelector="@android:color/transparent"
-        android:paddingBottom="4dip"
-        android:paddingLeft="4dip"
-        android:paddingRight="3dip"
-        android:paddingTop="4dip"
         android:scrollbars="none"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/tb"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/ll_back_play"/>
 
     <LinearLayout
         android:id="@+id/ll_back_play"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="115dip"
         android:background="@mipmap/bg_b1"
         android:clickable="true"
         android:orientation="horizontal"
+        android:onClick="onClick"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/tb" >
+        app:layout_constraintLeft_toRightOf="@+id/tb"
+        app:layout_constraintRight_toRightOf="parent">
 
-        <LinearLayout
+
+        <com.tw.music.utils.CircleImageView
+            android:id="@+id/albumart"
             android:layout_width="98dip"
             android:layout_height="98dip"
             android:layout_marginLeft="10dip"
             android:layout_marginTop="5dip"
-            android:background="@mipmap/album_l"
-            android:gravity="center" >
-
-            <com.tw.music.utils.CircleImageView
-                android:id="@+id/albumart"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@mipmap/album_l" />
-        </LinearLayout>
+            android:src="@mipmap/album_l" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -150,6 +149,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:clickable="true"
+                android:onClick="onClick"
                 android:scaleType="center"
                 android:src="@drawable/selector_btn_prev_list" />
 
@@ -159,6 +159,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:clickable="true"
+                android:onClick="onClick"
                 android:scaleType="center"
                 android:src="@drawable/selector_btn_music_pp_list" />
 
@@ -168,6 +169,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:clickable="true"
+                android:onClick="onClick"
                 android:scaleType="center"
                 android:src="@drawable/selector_btn_next_list" />
         </LinearLayout>

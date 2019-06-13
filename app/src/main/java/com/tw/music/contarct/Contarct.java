@@ -1,13 +1,10 @@
 package com.tw.music.contarct;
 
 import com.tw.music.presenter.BasePresenter;
-import com.tw.music.utils.visualizer.BaseVisualizerView;
+import com.tw.music.visualizer.BaseVisualizerView;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.provider.ContactsContract.Data;
-import android.view.View;
-import android.widget.Adapter;
 import android.widget.BaseAdapter;
 /*
  * @author xy by 20190611
@@ -130,5 +127,9 @@ public interface Contarct {
 		 * @param position
 		 */
 		void setListitemlistener(int position);
+		/**
+		 * 加载频谱
+		 */
+		void setVisualizerFxAndUi();
     }
 }

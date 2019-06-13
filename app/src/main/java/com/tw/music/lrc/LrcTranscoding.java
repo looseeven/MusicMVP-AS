@@ -1,4 +1,4 @@
-package com.tw.music.utils.lrc;
+package com.tw.music.lrc;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -59,6 +59,7 @@ public class LrcTranscoding {
 			}
 		}catch(Exception e){
 			e.printStackTrace();
+			Log.i("md","e  "+e.toString());
 		}finally{
 			if(fis!=null){
 				try{

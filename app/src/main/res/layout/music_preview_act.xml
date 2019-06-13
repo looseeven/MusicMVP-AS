@@ -64,7 +64,7 @@
         android:onClick="onClick"
         android:src="@mipmap/btn_playback_ic_play_small" />
 
-    <com.tw.music.utils.lrc.LrcView
+    <com.tw.music.lrc.LrcView
         android:id="@+id/lrc_view"
         android:layout_width="0dp"
         android:layout_height="60dp"

@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MusicActivity"
-    android:id="@+id/drag_layer">
+    android:id="@+id/drag_layer"
+    android:fitsSystemWindows="true">
 
     <include
         android:id="@+id/music_player"

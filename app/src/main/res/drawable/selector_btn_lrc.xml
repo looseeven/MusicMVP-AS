@@ -15,6 +15,4 @@
 -->
 
 <level-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:maxLevel="0" android:drawable="@mipmap/qiehuan_lrc_n" />
-    <item android:maxLevel="1" android:drawable="@mipmap/qiehuan_lrc_h" />
 </level-list>

@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:background="@mipmap/album"/>
+        android:background="@mipmap/album_bk"/>
     <ImageView
         android:id="@+id/iv_album"
         android:layout_width="201dp"
@@ -137,8 +137,7 @@
         app:layout_constraintBottom_toTopOf="@+id/progress"
         app:layout_constraintLeft_toRightOf="@+id/im_album"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/album"
-        app:lrcMode="KARAOKE" />
+        app:layout_constraintTop_toBottomOf="@+id/album" />
 
     <TextView
         android:id="@+id/currenttime"

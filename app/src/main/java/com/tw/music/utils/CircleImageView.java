@@ -2,7 +2,6 @@ package com.tw.music.utils;
 
 
 import com.tw.music.R;
-
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -22,321 +21,349 @@ import android.net.Uri;
 //import android.support.annotation.ColorRes;
 //import android.support.annotation.DrawableRes;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
+import android.view.animation.Transformation;
 import android.widget.ImageView;
 
 
 public class CircleImageView extends ImageView {
-    private static final ScaleType SCALE_TYPE = ScaleType.CENTER_INSIDE;
+	private static final ScaleType SCALE_TYPE = ScaleType.CENTER_INSIDE;
 
-    private static final Bitmap.Config BITMAP_CONFIG = Bitmap.Config.ARGB_8888;
-    private static final int COLORDRAWABLE_DIMENSION = 2;
+	private static final Bitmap.Config BITMAP_CONFIG = Bitmap.Config.ARGB_8888;
+	private static final int COLORDRAWABLE_DIMENSION = 2;
 
-    private static final int DEFAULT_BORDER_WIDTH = 0;
-    private static final int DEFAULT_BORDER_COLOR = Color.BLACK;
-    private static final boolean DEFAULT_BORDER_OVERLAY = false;
+	private static final int DEFAULT_BORDER_WIDTH = 0;
+	private static final int DEFAULT_BORDER_COLOR = Color.BLACK;
+	private static final boolean DEFAULT_BORDER_OVERLAY = false;
 
-    private final RectF mDrawableRect = new RectF();
-    private final RectF mBorderRect = new RectF();
+	private final RectF mDrawableRect = new RectF();
+	private final RectF mBorderRect = new RectF();
 
-    private final Matrix mShaderMatrix = new Matrix();
-    private final Paint mBitmapPaint = new Paint();
-    private final Paint mBorderPaint = new Paint();
+	private final Matrix mShaderMatrix = new Matrix();
+	private final Paint mBitmapPaint = new Paint();
+	private final Paint mBorderPaint = new Paint();
 
-    private int mBorderColor = DEFAULT_BORDER_COLOR;
-    private int mBorderWidth = DEFAULT_BORDER_WIDTH;
+	private int mBorderColor = DEFAULT_BORDER_COLOR;
+	private int mBorderWidth = DEFAULT_BORDER_WIDTH;
 
 
-    private Bitmap mBitmap;
-    private BitmapShader mBitmapShader;
-    private int mBitmapWidth;
-    private int mBitmapHeight;
+	private Bitmap mBitmap;
+	private BitmapShader mBitmapShader;
+	private int mBitmapWidth;
+	private int mBitmapHeight;
 
-    private float mDrawableRadius;
-    private float mBorderRadius;
+	private float mDrawableRadius;
+	private float mBorderRadius;
 
-    private ColorFilter mColorFilter;
+	private ColorFilter mColorFilter;
 
-    private boolean mReady;
-    private boolean mSetupPending;
-    private boolean mBorderOverlay;
+	private boolean mReady;
+	private boolean mSetupPending;
+	private boolean mBorderOverlay;
 
-    private ObjectAnimator mObjectAnimator;
-    private static final int DEFAULT_DURATION = 10 * 1000;
-    
-	public void startRotation(){
-		if(mObjectAnimator != null){
-			if(!mObjectAnimator.isRunning()){
-				mObjectAnimator.start();
-			}
-		} else {
-			initRotateAnimation(0f);
-		}
-	}
-	
-	public void stopRotation(){
-		if(mObjectAnimator != null){
-			if(mObjectAnimator.isRunning()){
-				mObjectAnimator.cancel();
-			}
-			float valueAvatar =
-					(Float)(mObjectAnimator.getAnimatedValue());
-//			mObjectAnimator.getAnimatedFraction();
-			mObjectAnimator.setFloatValues(valueAvatar, 360f + valueAvatar);
-		} else {
-			initRotateAnimation(0f);
-		}
-	}
-	
-	private void initRotateAnimation(float start){
-		mObjectAnimator = ObjectAnimator.ofFloat(this, "rotation", start, 360f + start);
-		mObjectAnimator.setDuration(DEFAULT_DURATION);
-		mObjectAnimator.setInterpolator(new LinearInterpolator());
-		mObjectAnimator.setRepeatCount(ObjectAnimator.INFINITE);
-	}
+	private static final int DEFAULT_DURATION = 10 * 1000;
+	public static final int STATE_PLAYING =1;//正在播放
+	public static final int STATE_PAUSE =2;//暂停
+	public static final int STATE_STOP =3;//停止
+	public int state;
+
+	private float angle;//记录RotateAnimation中受插值器数值影响的角度
+	private float angle2;//主要用来记录暂停时停留的角度，即View初始旋转角度
+	private int viewWidth;
+	private int viewHeight;
+	private MusicAnim musicAnim;
 
 	@Override
 	protected void onFinishInflate() {
 		super.onFinishInflate();
-		initRotateAnimation(0f);
 	}
 
-    public CircleImageView(Context context) {
-        super(context);
+	public CircleImageView(Context context) {
+		super(context);
 
-        init();
-    }
+		init();
+	}
 
-    public CircleImageView(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
+	public CircleImageView(Context context, AttributeSet attrs) {
+		this(context, attrs, 0);
+	}
 
-    public CircleImageView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
+	public CircleImageView(Context context, AttributeSet attrs, int defStyle) {
+		super(context, attrs, defStyle);
 
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CircleImageView, defStyle, 0);
+		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CircleImageView, defStyle, 0);
 
-        mBorderWidth = a.getDimensionPixelSize(R.styleable.CircleImageView_border_width, DEFAULT_BORDER_WIDTH);
-        mBorderColor = a.getColor(R.styleable.CircleImageView_border_color, DEFAULT_BORDER_COLOR);
-        mBorderOverlay = a.getBoolean(R.styleable.CircleImageView_border_overlay, DEFAULT_BORDER_OVERLAY);
+		mBorderWidth = a.getDimensionPixelSize(R.styleable.CircleImageView_border_width, DEFAULT_BORDER_WIDTH);
+		mBorderColor = a.getColor(R.styleable.CircleImageView_border_color, DEFAULT_BORDER_COLOR);
+		mBorderOverlay = a.getBoolean(R.styleable.CircleImageView_border_overlay, DEFAULT_BORDER_OVERLAY);
 
-        a.recycle();
+		a.recycle();
 
-        init();
-    }
+		init();
+	}
 
-    private void init() {
-        super.setScaleType(SCALE_TYPE);
-        mReady = true;
+	public void init() {
+		super.setScaleType(SCALE_TYPE);
+		mReady = true;
+		state = STATE_STOP;
+		angle = 0;
+		angle2 = 0;
+		viewWidth = 0;
+		viewHeight = 0;
+		if (mSetupPending) {
+			setup();
+			mSetupPending = false;
+		}
+	}
 
-        if (mSetupPending) {
-            setup();
-            mSetupPending = false;
-        }
-    }
+	@Override
+	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+		viewWidth = getMeasuredWidth();
+		viewHeight = getMeasuredHeight();
+		playMusic();
+	}
 
-    @Override
-    public ScaleType getScaleType() {
-        return SCALE_TYPE;
-    }
 
-    @Override
-    public void setScaleType(ScaleType scaleType) {
-        if (scaleType != SCALE_TYPE) {
-            throw new IllegalArgumentException(String.format("ScaleType %s not supported.", scaleType));
-        }
-    }
+	public class MusicAnim extends RotateAnimation{
+		public MusicAnim(float fromDegrees, float toDegrees, float pivotX, float pivotY) {
+			super(fromDegrees, toDegrees, pivotX, pivotY);
+		}
 
-    @Override
-    public void setAdjustViewBounds(boolean adjustViewBounds) {
-        if (adjustViewBounds) {
-            throw new IllegalArgumentException("adjustViewBounds not supported.");
-        }
-    }
+		@Override
+		protected void applyTransformation(float interpolatedTime, Transformation t) {
+			super.applyTransformation(interpolatedTime, t);
+			angle = interpolatedTime * 360;
+		}
+	}
 
-    @Override
-    protected void onDraw(Canvas canvas) {
-        if (getDrawable() == null) {
-            return;
-        }
+	public void playMusic(){
+		musicAnim = new MusicAnim(0,360,viewWidth/2,viewHeight/2);
+		musicAnim.setDuration(8000);
+		musicAnim.setInterpolator(new LinearInterpolator());//动画时间线性渐变
+		musicAnim.setRepeatCount(ObjectAnimator.INFINITE);
+		startAnimation(musicAnim);
+		state = STATE_PLAYING;
+	}
 
-        canvas.drawCircle(getWidth() / 2, getHeight() / 2, mDrawableRadius, mBitmapPaint);
-        if (mBorderWidth != 0) {
-            canvas.drawCircle(getWidth() / 2, getHeight() / 2, mBorderRadius, mBorderPaint);
-        }
-    }
+	public void pauseMusic(){
+		angle2 = (float) ((angle2 + angle)%360-0.2);//可以取余也可以不取，看实际的需求
+		musicAnim.cancel();
+		state = STATE_PAUSE;
+		invalidate();
 
-    @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
-        setup();
-    }
+	}
 
-    public int getBorderColor() {
-        return mBorderColor;
-    }
+	public void stopMusic(){
+		angle2 = 0;
+		clearAnimation();
+		state = STATE_STOP;
+		invalidate();
+	}
+	@Override
+	public ScaleType getScaleType() {
+		return SCALE_TYPE;
+	}
 
-    public void setBorderColor(int borderColor) {
-        if (borderColor == mBorderColor) {
-            return;
-        }
+	@Override
+	public void setScaleType(ScaleType scaleType) {
+		if (scaleType != SCALE_TYPE) {
+			throw new IllegalArgumentException(String.format("ScaleType %s not supported.", scaleType));
+		}
+	}
 
-        mBorderColor = borderColor;
-        mBorderPaint.setColor(mBorderColor);
-        invalidate();
-    }
+	@Override
+	public void setAdjustViewBounds(boolean adjustViewBounds) {
+		if (adjustViewBounds) {
+			throw new IllegalArgumentException("adjustViewBounds not supported.");
+		}
+	}
 
-    public void setBorderColorResource(int borderColorRes) {
-        setBorderColor(getContext().getResources().getColor(borderColorRes));
-    }
+	@Override
+	protected void onDraw(Canvas canvas) {
+		if (getDrawable() == null) {
+			return;
+		}
+		canvas.rotate(angle2,viewWidth/2,viewHeight/2);
+		canvas.drawCircle(getWidth() / 2, getHeight() / 2, mDrawableRadius, mBitmapPaint);
+		if (mBorderWidth != 0) {
+			canvas.drawCircle(getWidth() / 2, getHeight() / 2, mBorderRadius, mBorderPaint);
+		}
+	}
 
-    public int getBorderWidth() {
-        return mBorderWidth;
-    }
+	@Override
+	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+		super.onSizeChanged(w, h, oldw, oldh);
+		setup();
+	}
 
-    public void setBorderWidth(int borderWidth) {
-        if (borderWidth == mBorderWidth) {
-            return;
-        }
+	public int getBorderColor() {
+		return mBorderColor;
+	}
 
-        mBorderWidth = borderWidth;
-        setup();
-    }
+	public void setBorderColor(int borderColor) {
+		if (borderColor == mBorderColor) {
+			return;
+		}
 
-    public boolean isBorderOverlay() {
-        return mBorderOverlay;
-    }
+		mBorderColor = borderColor;
+		mBorderPaint.setColor(mBorderColor);
+		invalidate();
+	}
 
-    public void setBorderOverlay(boolean borderOverlay) {
-        if (borderOverlay == mBorderOverlay) {
-            return;
-        }
+	public void setBorderColorResource(int borderColorRes) {
+		setBorderColor(getContext().getResources().getColor(borderColorRes));
+	}
 
-        mBorderOverlay = borderOverlay;
-        setup();
-    }
+	public int getBorderWidth() {
+		return mBorderWidth;
+	}
 
-    @Override
-    public void setImageBitmap(Bitmap bm) {
-        super.setImageBitmap(bm);
-        mBitmap = bm;
-        setup();
-    }
+	public void setBorderWidth(int borderWidth) {
+		if (borderWidth == mBorderWidth) {
+			return;
+		}
 
-    @Override
-    public void setImageDrawable(Drawable drawable) {
-        super.setImageDrawable(drawable);
-        mBitmap = getBitmapFromDrawable(drawable);
-        setup();
-    }
+		mBorderWidth = borderWidth;
+		setup();
+	}
 
-    @Override
-    public void setImageResource(int resId) {
-        super.setImageResource(resId);
-        mBitmap = getBitmapFromDrawable(getDrawable());
-        setup();
-    }
+	public boolean isBorderOverlay() {
+		return mBorderOverlay;
+	}
 
-    @Override
-    public void setImageURI(Uri uri) {
-        super.setImageURI(uri);
-        mBitmap = getBitmapFromDrawable(getDrawable());
-        setup();
-    }
+	public void setBorderOverlay(boolean borderOverlay) {
+		if (borderOverlay == mBorderOverlay) {
+			return;
+		}
 
-    @Override
-    public void setColorFilter(ColorFilter cf) {
-        if (cf == mColorFilter) {
-            return;
-        }
+		mBorderOverlay = borderOverlay;
+		setup();
+	}
 
-        mColorFilter = cf;
-        mBitmapPaint.setColorFilter(mColorFilter);
-        invalidate();
-    }
+	@Override
+	public void setImageBitmap(Bitmap bm) {
+		super.setImageBitmap(bm);
+		mBitmap = bm;
+		setup();
+	}
 
-    private Bitmap getBitmapFromDrawable(Drawable drawable) {
-        if (drawable == null) {
-            return null;
-        }
+	@Override
+	public void setImageDrawable(Drawable drawable) {
+		super.setImageDrawable(drawable);
+		mBitmap = getBitmapFromDrawable(drawable);
+		setup();
+	}
 
-        if (drawable instanceof BitmapDrawable) {
-            return ((BitmapDrawable) drawable).getBitmap();
-        }
+	@Override
+	public void setImageResource(int resId) {
+		super.setImageResource(resId);
+		mBitmap = getBitmapFromDrawable(getDrawable());
+		setup();
+	}
 
-        try {
-            Bitmap bitmap;
+	@Override
+	public void setImageURI(Uri uri) {
+		super.setImageURI(uri);
+		mBitmap = getBitmapFromDrawable(getDrawable());
+		setup();
+	}
 
-            if (drawable instanceof ColorDrawable) {
-                bitmap = Bitmap.createBitmap(COLORDRAWABLE_DIMENSION, COLORDRAWABLE_DIMENSION, BITMAP_CONFIG);
-            } else {
-                bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), BITMAP_CONFIG);
-            }
+	@Override
+	public void setColorFilter(ColorFilter cf) {
+		if (cf == mColorFilter) {
+			return;
+		}
 
-            Canvas canvas = new Canvas(bitmap);
-            drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-            drawable.draw(canvas);
-            return bitmap;
-        } catch (OutOfMemoryError e) {
-            return null;
-        }
-    }
+		mColorFilter = cf;
+		mBitmapPaint.setColorFilter(mColorFilter);
+		invalidate();
+	}
 
-    private void setup() {
-        if (!mReady) {
-            mSetupPending = true;
-            return;
-        }
+	private Bitmap getBitmapFromDrawable(Drawable drawable) {
+		if (drawable == null) {
+			return null;
+		}
 
-        if (mBitmap == null) {
-            return;
-        }
+		if (drawable instanceof BitmapDrawable) {
+			return ((BitmapDrawable) drawable).getBitmap();
+		}
 
-        mBitmapShader = new BitmapShader(mBitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
+		try {
+			Bitmap bitmap;
 
-        mBitmapPaint.setAntiAlias(true);
-        mBitmapPaint.setShader(mBitmapShader);
+			if (drawable instanceof ColorDrawable) {
+				bitmap = Bitmap.createBitmap(COLORDRAWABLE_DIMENSION, COLORDRAWABLE_DIMENSION, BITMAP_CONFIG);
+			} else {
+				bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), BITMAP_CONFIG);
+			}
 
-        mBorderPaint.setStyle(Paint.Style.STROKE);
-        mBorderPaint.setAntiAlias(true);
-        mBorderPaint.setColor(mBorderColor);
-        mBorderPaint.setStrokeWidth(mBorderWidth);
+			Canvas canvas = new Canvas(bitmap);
+			drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+			drawable.draw(canvas);
+			return bitmap;
+		} catch (OutOfMemoryError e) {
+			return null;
+		}
+	}
 
-        mBitmapHeight = mBitmap.getHeight();
-        mBitmapWidth = mBitmap.getWidth();
+	private void setup() {
+		if (!mReady) {
+			mSetupPending = true;
+			return;
+		}
 
-        mBorderRect.set(0, 0, getWidth(), getHeight());
-        mBorderRadius = Math.min((mBorderRect.height() - mBorderWidth) / 2, (mBorderRect.width() - mBorderWidth) / 2);
+		if (mBitmap == null) {
+			return;
+		}
 
-        mDrawableRect.set(mBorderRect);
-        if (!mBorderOverlay) {
-            mDrawableRect.inset(mBorderWidth, mBorderWidth);
-        }
-        mDrawableRadius = Math.min(mDrawableRect.height() / 2, mDrawableRect.width() / 2);
+		mBitmapShader = new BitmapShader(mBitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
 
-        updateShaderMatrix();
-        invalidate();
-    }
+		mBitmapPaint.setAntiAlias(true);
+		mBitmapPaint.setShader(mBitmapShader);
 
-    private void updateShaderMatrix() {
-        float scale;
-        float dx = 0;
-        float dy = 0;
+		mBorderPaint.setStyle(Paint.Style.STROKE);
+		mBorderPaint.setAntiAlias(true);
+		mBorderPaint.setColor(mBorderColor);
+		mBorderPaint.setStrokeWidth(mBorderWidth);
 
-        mShaderMatrix.set(null);
+		mBitmapHeight = mBitmap.getHeight();
+		mBitmapWidth = mBitmap.getWidth();
 
-        if (mBitmapWidth * mDrawableRect.height() > mDrawableRect.width() * mBitmapHeight) {
-            scale = mDrawableRect.height() / (float) mBitmapHeight;
-            dx = (mDrawableRect.width() - mBitmapWidth * scale) * 0.5f;
-        } else {
-            scale = mDrawableRect.width() / (float) mBitmapWidth;
-            dy = (mDrawableRect.height() - mBitmapHeight * scale) * 0.5f;
-        }
+		mBorderRect.set(0, 0, getWidth(), getHeight());
+		mBorderRadius = Math.min((mBorderRect.height() - mBorderWidth) / 2, (mBorderRect.width() - mBorderWidth) / 2);
 
-        mShaderMatrix.setScale(scale, scale);
-        mShaderMatrix.postTranslate((int) (dx + 0.5f) + mDrawableRect.left, (int) (dy + 0.5f) + mDrawableRect.top);
+		mDrawableRect.set(mBorderRect);
+		if (!mBorderOverlay) {
+			mDrawableRect.inset(mBorderWidth, mBorderWidth);
+		}
+		mDrawableRadius = Math.min(mDrawableRect.height() / 2, mDrawableRect.width() / 2);
 
-        mBitmapShader.setLocalMatrix(mShaderMatrix);
-    }
+		updateShaderMatrix();
+		invalidate();
+	}
+
+	private void updateShaderMatrix() {
+		float scale;
+		float dx = 0;
+		float dy = 0;
+
+		mShaderMatrix.set(null);
+
+		if (mBitmapWidth * mDrawableRect.height() > mDrawableRect.width() * mBitmapHeight) {
+			scale = mDrawableRect.height() / (float) mBitmapHeight;
+			dx = (mDrawableRect.width() - mBitmapWidth * scale) * 0.5f;
+		} else {
+			scale = mDrawableRect.width() / (float) mBitmapWidth;
+			dy = (mDrawableRect.height() - mBitmapHeight * scale) * 0.5f;
+		}
+
+		mShaderMatrix.setScale(scale, scale);
+		mShaderMatrix.postTranslate((int) (dx + 0.5f) + mDrawableRect.left, (int) (dy + 0.5f) + mDrawableRect.top);
+
+		mBitmapShader.setLocalMatrix(mShaderMatrix);
+	}
 
 }

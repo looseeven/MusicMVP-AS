@@ -73,7 +73,6 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
-        android:layout_toLeftOf="@+id/icon"
         android:ellipsize="end"
         android:gravity="center_vertical"
         android:paddingLeft="5dip"

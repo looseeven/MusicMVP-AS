@@ -70,7 +70,6 @@
         android:layout_height="60dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/playpause"
-        app:lrcMode="KARAOKE" />
+        app:layout_constraintTop_toBottomOf="@+id/playpause" />
 </android.support.constraint.ConstraintLayout>
 

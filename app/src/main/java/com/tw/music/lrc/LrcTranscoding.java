@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import android.content.pm.PackageManager;
 import android.util.Log;
 
 public class LrcTranscoding {
@@ -21,35 +22,38 @@ public class LrcTranscoding {
 			bis=new BufferedInputStream(fis);
 			bis.mark(4);
 			byte[] first3bytes=new byte[3];
-			//System.out.println("");
 			//找到文档的前三个字节并自动判断文档类型。
 			bis.read(first3bytes);
 			bis.reset();
+			/*
+             * 动态识别歌词编码格式
+             * 防止出现乱码问题
+             */
 			if(first3bytes[0] == (byte) 0xEF && first3bytes[1] == (byte) 0xBB
 					&& first3bytes[2] == (byte) 0xBF){//utf-8
 				reader=new BufferedReader(new InputStreamReader(bis,"utf-8"));
-				Log.i("md", "utf-8");
+				Log.i("md", "lrc  utf-8");
 
 			}else if(first3bytes[0]==(byte)0xFF
 					&&first3bytes[1]==(byte)0xFE){
 
 				reader=new BufferedReader(
 						new InputStreamReader(bis,"unicode"));
-				Log.i("md", "unicode");
+				Log.i("md", "lrc unicode");
 			}else if(first3bytes[0]==(byte)0xFE
 					&&first3bytes[1]==(byte)0xFF){
 
 				reader=new BufferedReader(new InputStreamReader(bis,
 						"utf-16be"));
-				Log.i("md", "utf-16be");
+				Log.i("md", "lrc utf-16be");
 			}else if(first3bytes[0]==(byte)0xFF
 					&&first3bytes[1]==(byte)0xFF){
 				reader=new BufferedReader(new InputStreamReader(bis,
 						"utf-16le"));
-				Log.i("md", "utf-16le");
+				Log.i("md", "lrc utf-16le");
 			}else{
 				reader=new BufferedReader(new InputStreamReader(bis,"GBK"));
-				Log.i("md", "GBK");
+				Log.i("md", "lrc GBK");
 			}
 			String str=reader.readLine();
 

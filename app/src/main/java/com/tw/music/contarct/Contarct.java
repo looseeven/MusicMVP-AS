@@ -4,7 +4,9 @@ import com.tw.music.presenter.BasePresenter;
 import com.tw.music.visualizer.BaseVisualizerView;
 
 import android.graphics.Bitmap;
+import android.graphics.drawable.Animatable;
 import android.net.Uri;
+import android.view.animation.Animation;
 import android.widget.BaseAdapter;
 /*
  * @author xy by 20190611
@@ -21,6 +23,10 @@ public interface Contarct {
          * 准备提示
          */
         void onPrepared();
+        /**
+    	 * @param playpause 播放状态
+    	 */
+    	void showPlaypause(Boolean playpause);
     }
     interface prePresenter extends BasePresenter {
         void setUri(Uri mUri); //设置启动URI
@@ -68,6 +74,11 @@ public interface Contarct {
     	 * 列表位置
     	 */
     	void showSmoothScrollToPosition(int position);
+    	/**
+    	 * @param playpause 播放状态
+    	 * @param ispause 是否是暂停
+    	 */
+    	void showPlaypause(Boolean playpause, Boolean ispause);
     }
     interface mainPresenter extends BasePresenter {
     	/**

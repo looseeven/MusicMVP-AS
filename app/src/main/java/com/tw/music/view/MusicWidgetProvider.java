@@ -13,7 +13,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 public class MusicWidgetProvider extends AppWidgetProvider {
@@ -94,7 +93,7 @@ public class MusicWidgetProvider extends AppWidgetProvider {
 		views.setProgressBar(R.id.progress, totaltime, currenttime, false);
 		Bitmap bm = service.getAlbumArt();
 		if(bm == null) {
-			views.setImageViewResource(R.id.albumart, R.mipmap.album);
+			views.setImageViewResource(R.id.albumart, R.mipmap.album_bk);
 		} else {
 			views.setImageViewBitmap(R.id.albumart, bm);
 		}

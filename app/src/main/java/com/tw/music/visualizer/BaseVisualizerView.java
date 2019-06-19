@@ -1,5 +1,7 @@
 package com.tw.music.visualizer;
 
+import java.util.Random;
+
 import com.tw.music.MusicActivity;
 
 import android.content.Context;
@@ -7,6 +9,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
+import android.graphics.Paint.Cap;
+import android.graphics.Paint.Join;
 import android.graphics.Shader;
 import android.media.audiofx.Visualizer;
 import android.view.View;
@@ -83,7 +87,7 @@ public class BaseVisualizerView extends View implements Visualizer.OnDataCapture
 			//                mPaint.setColor(Color.WHITE);//画笔颜色  
 			//                mPaint.setAlpha(100 - (100 / 6 * i));//倒影颜色  
 			//                canvas.drawLine(x, y1, (x + strokeLength), y1, mPaint);//绘制频谱块  
-			//            }  
+			//}  
 		}
 	}
 

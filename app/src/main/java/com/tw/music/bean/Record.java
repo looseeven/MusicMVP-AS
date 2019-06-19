@@ -2,10 +2,10 @@ package com.tw.music.bean;
 
 public class Record {
 	public String mName;
-	public 	int mIndex;
+	public int mIndex;
 	public int mLevel;
 	public MusicName[] mLName;
-	public 	int mLength;
+	public int mLength;
 	public int mCLength;
 	public Record mCNext;
 	public Record mBNext;

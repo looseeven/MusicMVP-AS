@@ -33,9 +33,4 @@ public interface BaseView<T> {
 	 * @param currenttime 实时进度
 	 */
 	void showSeekBar(int totaltime, int currenttime);
-	/**
-	 * @param totaltime 总长度
-	 * @param currenttime 实时进度
-	 */
-	void showPlaypause(Boolean playpause);
 }

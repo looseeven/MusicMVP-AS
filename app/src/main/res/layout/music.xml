@@ -9,17 +9,17 @@
     android:fitsSystemWindows="true">
 
     <include
-        android:id="@+id/music_player"
+        android:id="@+id/ll_music_play"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         layout="@layout/music_player">
     </include>
 
     <include
-        android:id="@+id/music_list"
+        android:id="@+id/ll_music_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
+        android:visibility="invisible"
         layout="@layout/music_list">
     </include>
 

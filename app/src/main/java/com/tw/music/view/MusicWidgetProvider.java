@@ -1,11 +1,9 @@
 package com.tw.music.view;
 
 import java.util.Locale;
-
 import com.tw.music.MusicActivity;
 import com.tw.music.MusicService;
 import com.tw.music.R;
-
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;

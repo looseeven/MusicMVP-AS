@@ -30,6 +30,7 @@ public class MusicActivity extends BaseActivity implements Contarct.mainView{
 	private ListView mList;
 	private CircleImageView mAlbumArt;
 	private ImageView mAlbumArt2;
+	private ImageView mAlbumArt1;
 	private SeekBar mProgress;
 	private LinearLayout ll_fx; //频谱
 	public static LrcView lrc_view; //歌词
@@ -46,6 +47,7 @@ public class MusicActivity extends BaseActivity implements Contarct.mainView{
 		mList.setOnItemClickListener(itemClickListener);
 		ll_fx.setOrientation(LinearLayout.VERTICAL);
 		mAlbumArt2=(ImageView) findViewById(R.id.iv_album);
+		mAlbumArt1=(ImageView) findViewById(R.id.iv_album_split_sereen);
 		mAlbumArt = (CircleImageView)findViewById(R.id.albumart);
 		mProgress = ((SeekBar)findViewById(R.id.progress));
 		mProgress.setOnSeekBarChangeListener(seekbarlistener);
@@ -106,6 +108,7 @@ public class MusicActivity extends BaseActivity implements Contarct.mainView{
 			break;
 		case R.id.pp2:
 		case R.id.pp:
+		case R.id.pp_split_sereen:
 			if (isPlayPause) {
 				mAlbumArt.pauseMusic();
 				((ImageView)findViewById(R.id.pp)).getDrawable().setLevel(0);
@@ -122,13 +125,16 @@ public class MusicActivity extends BaseActivity implements Contarct.mainView{
 			break;
 		case R.id.prev2:
 		case R.id.prev:
+		case R.id.prev_split_sereen:
 			mPresenter.setPrev();
 			break;
 		case R.id.next2:
 		case R.id.next:
+		case R.id.next_split_sereen:
 			mPresenter.setNext();
 			break;
 		case R.id.repeat:
+		case R.id.repeat_split_sereen:
 			mPresenter.setRepeat();
 			break;
 		case R.id.play_list:
@@ -140,6 +146,7 @@ public class MusicActivity extends BaseActivity implements Contarct.mainView{
 			findViewById(R.id.ll_music_play).setVisibility(View.VISIBLE);
 			break;
 		case R.id.iv_collect:
+		case R.id.iv_collect_split_sereen:
 			mPresenter.setCollect();
 			break;
 		case R.id.playlist:
@@ -163,6 +170,7 @@ public class MusicActivity extends BaseActivity implements Contarct.mainView{
 	@Override
 	public void showID3(String title, String artist, String album) {
 		((TextView)findViewById(R.id.song)).setText(title);
+		((TextView)findViewById(R.id.song_split_sereen)).setText(title);
 		((TextView)findViewById(R.id.artist)).setText(artist);
 		((TextView)findViewById(R.id.album)).setText(album);
 		((TextView) findViewById(R.id.tv_music_artis)).setText(artist);
@@ -230,11 +238,13 @@ public class MusicActivity extends BaseActivity implements Contarct.mainView{
 	@Override
 	public void showRepeat(int Repeat, int mShuffle) {
 		((ImageView)findViewById(R.id.repeat)).getDrawable().setLevel(Repeat);
+		((ImageView)findViewById(R.id.repeat_split_sereen)).getDrawable().setLevel(Repeat);
 	}
 
 	@Override
 	public void showCollect(Boolean b) {
 		((ImageView) findViewById(R.id.iv_collect)).getDrawable().setLevel(b?1:0);
+		((ImageView) findViewById(R.id.iv_collect_split_sereen)).getDrawable().setLevel(b?1:0);
 	}
 
 	@Override
@@ -266,9 +276,11 @@ public class MusicActivity extends BaseActivity implements Contarct.mainView{
 		if(bm == null) {
 			mAlbumArt.setImageResource(R.mipmap.album_ic);
 			mAlbumArt2.setImageResource(R.mipmap.album);
+			mAlbumArt1.setImageResource(R.mipmap.album);
 		} else {
 			mAlbumArt.setImageBitmap(bm);
 			mAlbumArt2.setImageBitmap(bm);
+			mAlbumArt1.setImageBitmap(bm);
 		}
 	}
 

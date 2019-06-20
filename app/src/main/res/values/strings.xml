@@ -22,4 +22,5 @@
     <string name="dialog2">由于需要获取必要权限，请您同意开启；\n否则，您将无法正常使用音乐</string>
     <string name="dialog3">开启</string>
     <string name="dialog4">取消</string>
+    <string name="time">0:00</string>
 </resources>

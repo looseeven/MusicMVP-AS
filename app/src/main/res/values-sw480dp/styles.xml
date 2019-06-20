@@ -20,13 +20,12 @@
         <item name="android:layout_width">165dp</item>
         <item name="android:layout_height">171dp</item>
         <item name="android:layout_marginLeft">12dip</item>
-        <item name="android:layout_marginRight">33dip</item>
+        <item name="android:layout_marginTop">33dip</item>
     </style>
 
     <style name="tv_song_value">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">54dp</item>
-        <item name="android:paddingLeft">30dp</item>
         <item name="android:textSize">25dp</item>
         <item name="android:textColor">#ffffff</item>
         <item name="android:ellipsize">end</item>
@@ -54,7 +53,7 @@
     </style>
 
     <style name="tv_time_value">
-        <item name="android:layout_width">60dp</item>
+        <item name="android:layout_width">40dp</item>
         <item name="android:layout_height">0dp</item>
         <item name="android:textSize">13dp</item>
         <item name="android:textColor">#ffffff</item>
@@ -63,7 +62,7 @@
 
     <style name="seekbar_value">
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_height">30dp</item>
         <item name="android:maxHeight">4dp</item>
         <item name="android:minHeight">4dp</item>
         <item name="android:paddingLeft">14dp</item>
@@ -89,5 +88,18 @@
     <style name="ll_parting_value">
         <item name="android:layout_width">30dp</item>
         <item name="android:layout_height">0dp</item>
+    </style>
+
+    <style name="re_music_list_item">
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">50dp</item>
+    </style>
+    <style name="re_music_list_item_tv_value">
+        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:singleLine">true</item>
     </style>
 </resources>

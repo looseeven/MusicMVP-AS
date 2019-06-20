@@ -1,34 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="56dip"
+    style="@style/re_music_list_item"
     android:layout_gravity="center_horizontal"
     android:background="@drawable/selector_item_bg"
-    android:ignoreGravity="@+id/icon"
-    android:paddingLeft="16dip"
-    android:paddingRight="16dp" >
+    android:ignoreGravity="@+id/icon">
 
     <ImageView
         android:id="@+id/file_item"
-        android:layout_width="33dip"
-        android:layout_height="33dip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:src="@drawable/selector_item_file_icon" />
 
     <TextView
         android:id="@+id/tv_index"
+        style="@style/re_music_list_item_tv_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignWithParentIfMissing="true"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="5dp"
-        android:ellipsize="end"
-        android:gravity="center"
-        android:paddingLeft="5dip"
-        android:singleLine="true"
-        android:textColor="#ffffff"
-        android:textSize="24dip" />
+        android:layout_centerVertical="true" />
 
     <ImageView
         android:id="@+id/music_icon"
@@ -42,6 +33,7 @@
 
     <TextView
         android:id="@+id/line"
+        style="@style/re_music_list_item_tv_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignWithParentIfMissing="true"
@@ -49,13 +41,7 @@
         android:layout_marginLeft="45dp"
         android:layout_marginRight="150dp"
         android:layout_toLeftOf="@+id/tv_artist"
-        android:layout_toRightOf="@+id/music_icon"
-        android:ellipsize="end"
-        android:gravity="center_vertical"
-        android:paddingLeft="5dip"
-        android:singleLine="true"
-        android:textColor="#ffffff"
-        android:textSize="24dip" />
+        android:layout_toRightOf="@+id/music_icon" />
 
     <ImageView
         android:id="@+id/iv_is_playing"
@@ -67,18 +53,13 @@
 
     <TextView
         android:id="@+id/tv_artist"
+        style="@style/re_music_list_item_tv_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignWithParentIfMissing="true"
         android:layout_centerVertical="true"
         android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
-        android:ellipsize="end"
-        android:gravity="center_vertical"
-        android:paddingLeft="5dip"
-        android:singleLine="true"
-        android:textColor="#ffffff"
-        android:textSize="24dip" />
+        android:layout_marginRight="32dp" />
 
     <ImageView
         android:id="@+id/btn_item_love"

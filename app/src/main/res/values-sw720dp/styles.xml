@@ -11,34 +11,32 @@
     <style name="player_global_padding">
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:paddingLeft">25dp</item>
-        <item name="android:paddingRight">25dp</item>
-        <item name="android:paddingTop">15dp</item>
+        <item name="android:paddingLeft">75dp</item>
+        <item name="android:paddingRight">75dp</item>
+        <item name="android:paddingTop">35dp</item>
     </style>
 
     <style name="im_album_value">
-        <item name="android:layout_width">165dp</item>
-        <item name="android:layout_height">171dp</item>
-        <item name="android:layout_marginLeft">12dip</item>
-        <item name="android:layout_marginRight">33dip</item>
+        <item name="android:layout_width">263dp</item>
+        <item name="android:layout_height">253dp</item>
+        <item name="android:layout_marginLeft">18dip</item>
+        <item name="android:layout_marginTop">50dip</item>
     </style>
 
     <style name="tv_song_value">
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">54dp</item>
-        <item name="android:paddingLeft">30dp</item>
-        <item name="android:textSize">25dp</item>
+        <item name="android:layout_height">75dp</item>
+        <item name="android:textSize">40dp</item>
         <item name="android:textColor">#ffffff</item>
         <item name="android:ellipsize">end</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:singleLine">true</item>
     </style>
-
     <style name="tv_artist_album_value">
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">38dp</item>
+        <item name="android:layout_height">64dp</item>
         <item name="android:paddingLeft">10dip</item>
-        <item name="android:textSize">15dip</item>
+        <item name="android:textSize">25dip</item>
         <item name="android:textColor">#ffffff</item>
         <item name="android:ellipsize">end</item>
         <item name="android:gravity">center_vertical</item>
@@ -48,15 +46,15 @@
     <style name="ll_fx_lrc_value">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">0dp</item>
-        <item name="android:layout_marginLeft">20dip</item>
+        <item name="android:layout_marginLeft">50dip</item>
         <item name="android:layout_marginRight">20dip</item>
         <item name="android:layout_marginBottom">10dp</item>
     </style>
 
     <style name="tv_time_value">
-        <item name="android:layout_width">60dp</item>
-        <item name="android:layout_height">0dp</item>
-        <item name="android:textSize">13dp</item>
+        <item name="android:layout_width">70dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:textSize">24dp</item>
         <item name="android:textColor">#ffffff</item>
         <item name="android:gravity">center</item>
     </style>
@@ -71,23 +69,37 @@
     </style>
 
     <style name="im_eq_value">
-        <item name="android:layout_marginRight">120dp</item>
+        <item name="android:layout_marginRight">170dp</item>
     </style>
 
     <style name="im_play_list_value">
-        <item name="android:layout_marginRight">120dp</item>
+        <item name="android:layout_marginRight">90dp</item>
     </style>
 
     <style name="im_bg_value">
-        <item name="android:layout_marginLeft">120dp</item>
+        <item name="android:layout_marginLeft">170dp</item>
     </style>
 
     <style name="im_fx_value">
-        <item name="android:layout_marginLeft">120dp</item>
+        <item name="android:layout_marginLeft">150dp</item>
     </style>
 
     <style name="ll_parting_value">
-        <item name="android:layout_width">30dp</item>
+        <item name="android:layout_width">50dp</item>
         <item name="android:layout_height">0dp</item>
+    </style>
+
+    <style name="re_music_list_item">
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">78dp</item>
+    </style>
+
+    <style name="re_music_list_item_tv_value">
+        <item name="android:textSize">24dp</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:singleLine">true</item>
     </style>
 </resources>

@@ -8,13 +8,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="player_global_padding">
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:paddingLeft">55dp</item>
-        <item name="android:paddingRight">55dp</item>
-        <item name="android:paddingTop">25dp</item>
+    <style name="player_album_bk">
+        <item name="android:layout_marginLeft">55dp</item>
+        <item name="android:layout_marginTop">25dp</item>
     </style>
+
 
     <style name="im_album_value">
         <item name="android:layout_width">211dp</item>
@@ -26,6 +24,8 @@
     <style name="tv_song_value">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">65dp</item>
+        <item name="android:layout_marginRight">55dp</item>
+        <item name="android:layout_marginLeft">40dp</item>
         <item name="android:textSize">35dp</item>
         <item name="android:textColor">#ffffff</item>
         <item name="android:ellipsize">end</item>
@@ -47,8 +47,8 @@
     <style name="ll_fx_lrc_value">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">0dp</item>
-        <item name="android:layout_marginLeft">50dip</item>
-        <item name="android:layout_marginRight">20dip</item>
+        <item name="android:layout_marginLeft">10dip</item>
+        <item name="android:layout_marginRight">30dip</item>
         <item name="android:layout_marginBottom">10dp</item>
     </style>
 
@@ -69,22 +69,6 @@
         <item name="android:paddingRight">14dp</item>
     </style>
 
-    <style name="im_eq_value">
-        <item name="android:layout_marginRight">170dp</item>
-    </style>
-
-    <style name="im_play_list_value">
-        <item name="android:layout_marginRight">150dp</item>
-    </style>
-
-    <style name="im_bg_value">
-        <item name="android:layout_marginLeft">170dp</item>
-    </style>
-
-    <style name="im_fx_value">
-        <item name="android:layout_marginLeft">150dp</item>
-    </style>
-
     <style name="ll_parting_value">
         <item name="android:layout_width">50dp</item>
         <item name="android:layout_height">0dp</item>
@@ -101,5 +85,26 @@
         <item name="android:ellipsize">end</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="music_list_albumart">
+        <item name="android:layout_width">89dp</item>
+        <item name="android:layout_height">89dp</item>
+        <item name="android:layout_marginLeft">25dp</item>
+    </style>
+
+    <style name="music_list_song">
+        <item name="android:textSize">23dp</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:layout_marginRight">15dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+    </style>
+    <style name="music_list_artis">
+        <item name="android:textSize">18dp</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:layout_marginRight">15dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
     </style>
 </resources>

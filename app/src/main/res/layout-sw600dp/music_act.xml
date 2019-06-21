@@ -12,8 +12,7 @@
         android:id="@+id/ll_music_play"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="invisible"
-        layout="@layout/music_player">
+        layout="@layout/music_act_player">
     </include>
 
     <include
@@ -21,13 +20,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="invisible"
-        layout="@layout/music_list">
+        layout="@layout/music_act_list">
     </include>
-
     <include
         android:id="@+id/ll_split_creen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         layout="@layout/music_split_sereen"
-        >
-
+        android:visibility="invisible">
     </include>
 </android.support.constraint.ConstraintLayout>

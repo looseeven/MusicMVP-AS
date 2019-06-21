@@ -1,4 +1,4 @@
 <level-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:maxLevel="0" android:drawable="@mipmap/qiehuan_xinxi_n" />
-    <item android:maxLevel="1" android:drawable="@mipmap/qiehuan_xinxi_h" />
+    <item android:maxLevel="0" android:drawable="@mipmap/spectrum" />
+    <item android:maxLevel="1" android:drawable="@mipmap/spectrum_pres" />
 </level-list>

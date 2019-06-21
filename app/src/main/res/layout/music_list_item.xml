@@ -1,96 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/re_music_list_item"
-    android:layout_gravity="center_horizontal"
-    android:background="@drawable/selector_item_bg"
-    android:ignoreGravity="@+id/icon">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/file_item"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:src="@drawable/selector_item_file_icon" />
-
-    <TextView
-        android:id="@+id/tv_index"
-        style="@style/re_music_list_item_tv_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignWithParentIfMissing="true"
-        android:layout_centerVertical="true" />
-
-    <ImageView
-        android:id="@+id/music_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="70dp"
-        android:layout_toRightOf="@+id/tv_index"
-        android:src="@drawable/selector_btn_icon" />
-
-    <TextView
-        android:id="@+id/line"
-        style="@style/re_music_list_item_tv_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignWithParentIfMissing="true"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="45dp"
-        android:layout_marginRight="150dp"
-        android:layout_toLeftOf="@+id/tv_artist"
-        android:layout_toRightOf="@+id/music_icon" />
-
-    <ImageView
-        android:id="@+id/iv_is_playing"
-        android:layout_width="24dip"
-        android:layout_height="24dip"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="130dp" />
-
-    <TextView
-        android:id="@+id/tv_artist"
-        style="@style/re_music_list_item_tv_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignWithParentIfMissing="true"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp" />
-
-    <ImageView
-        android:id="@+id/btn_item_love"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="8dip"
-        android:clickable="true"
-        android:onClick="onClick"
-        android:src="@drawable/selector_btn_collect_list" />
-
-    <ImageView
-        android:id="@+id/btn_item_delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="8dip"
-        android:clickable="true"
-        android:onClick="onClick"
-        android:src="@drawable/selector_item_delete"
-        android:visibility="gone" />
-
-    <ImageView
-        android:id="@+id/play_indicator"
-        android:layout_width="33dip"
-        android:layout_height="33dip"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="10dip"
-        android:src="@drawable/selector_item_play_indicator" />
+    <include
+        android:id="@+id/item_close"
+        layout="@layout/music_list_item_filename"/>
+    <include
+        android:id="@+id/item_open"
+        layout="@layout/music_list_item_song"/>
 
 </RelativeLayout>

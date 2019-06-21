@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.tw.music"
+    android:versionCode="1"
+    android:versionName="1.0"
     >
+    <uses-sdk android:minSdkVersion="21"
+        android:targetSdkVersion="27" />
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW" />
@@ -31,7 +35,10 @@
         </activity>
         <service android:name="com.tw.music.MusicService" >
         </service>
-
+        <activity
+            android:name="com.tw.music.view.PermissionActivity"
+            >
+        </activity>
         <receiver android:name="com.tw.music.view.MusicWidgetProvider" >
             <meta-data
                 android:name="android.appwidget.provider"

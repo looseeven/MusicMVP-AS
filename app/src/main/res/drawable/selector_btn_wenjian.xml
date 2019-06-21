@@ -2,5 +2,5 @@
 
 <level-list xmlns:android="http://schemas.android.com/apk/res/android" >
     <item android:maxLevel="0" android:drawable="@mipmap/wenjian"/>
-    <item android:maxLevel="1" android:drawable="@mipmap/wenjian_pres"/>
+    <item android:maxLevel="1" android:drawable="@mipmap/wenjian"/>
 </level-list>

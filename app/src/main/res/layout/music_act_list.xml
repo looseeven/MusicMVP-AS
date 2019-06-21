@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MusicActivity">
+
+    <LinearLayout
+        android:id="@+id/tb"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@mipmap/bg_g"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/playlist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_btn_bg"
+            android:clickable="true"
+            android:drawableTop="@drawable/selector_btn_play_list"
+            android:gravity="center_horizontal"
+            android:onClick="onClick" />
+
+        <TextView
+            android:id="@+id/sd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_btn_bg"
+            android:clickable="true"
+            android:drawableTop="@drawable/selector_btn_sd"
+            android:gravity="center_horizontal"
+            android:onClick="onClick" />
+
+        <TextView
+            android:id="@+id/usb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_btn_bg"
+            android:clickable="true"
+            android:drawableTop="@drawable/selector_btn_usb"
+            android:gravity="center_horizontal"
+            android:onClick="onClick" />
+
+        <TextView
+            android:id="@+id/inand"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_btn_bg"
+            android:clickable="true"
+            android:drawableTop="@drawable/selector_btn_wenjian"
+            android:gravity="center_horizontal"
+            android:onClick="onClick" />
+
+        <TextView
+            android:id="@+id/collect"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_btn_bg"
+            android:clickable="true"
+            android:drawableTop="@drawable/selector_btn_love"
+            android:gravity="center_horizontal"
+            android:onClick="onClick" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="@mipmap/xian"
+        android:dividerHeight="1dip"
+        android:fadingEdge="none"
+        android:listSelector="@android:color/transparent"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toTopOf="@+id/bot"
+        app:layout_constraintLeft_toRightOf="@+id/tb"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/bot"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/bg_b"
+        android:clickable="true"
+        android:onClick="onClick"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/tb"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <com.tw.music.utils.CircleImageView
+        android:id="@+id/albumart"
+        style="@style/music_list_albumart"
+        android:src="@mipmap/album_ic"
+        app:layout_constraintBottom_toBottomOf="@+id/bot"
+        app:layout_constraintLeft_toLeftOf="@+id/bot"
+        app:layout_constraintTop_toTopOf="@+id/bot" />
+
+
+    <TextView
+        android:id="@+id/tv_music_title"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:singleLine="true"
+        style="@style/music_list_song"
+        app:layout_constraintBottom_toTopOf="@+id/tv_music_artis"
+        app:layout_constraintLeft_toRightOf="@+id/albumart"
+        app:layout_constraintTop_toTopOf="@+id/bot"
+        app:layout_constraintRight_toLeftOf="@+id/prev_list"/>
+
+    <TextView
+        android:id="@+id/tv_music_artis"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:includeFontPadding="false"
+        android:gravity="center"
+        android:singleLine="true"
+        style="@style/music_list_artis"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/albumart"
+        app:layout_constraintTop_toBottomOf="@+id/tv_music_title"
+        app:layout_constraintRight_toLeftOf="@+id/prev_list" />
+
+
+    <ImageView
+        android:id="@+id/prev_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:onClick="onClick"
+        android:scaleType="center"
+        android:src="@drawable/selector_btn_prev_list"
+        app:layout_constraintBottom_toBottomOf="@+id/bot"
+        app:layout_constraintRight_toLeftOf="@+id/pp_list"
+        app:layout_constraintTop_toTopOf="@+id/bot" />
+
+    <ImageView
+        android:id="@+id/pp_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:onClick="onClick"
+        android:scaleType="center"
+        android:src="@drawable/selector_btn_music_pp_list"
+        app:layout_constraintBottom_toBottomOf="@+id/bot"
+        app:layout_constraintRight_toLeftOf="@+id/next_list"
+        app:layout_constraintTop_toTopOf="@+id/bot" />
+
+    <ImageView
+        android:id="@+id/next_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:onClick="onClick"
+        android:scaleType="center"
+        android:src="@drawable/selector_btn_next_list"
+        app:layout_constraintBottom_toBottomOf="@+id/bot"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/bot" />
+
+
+</android.support.constraint.ConstraintLayout>

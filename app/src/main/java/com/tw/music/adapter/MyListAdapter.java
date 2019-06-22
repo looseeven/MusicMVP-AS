@@ -96,9 +96,9 @@ public class MyListAdapter extends BaseAdapter {
          */
         TextView song;
         /**
-         * 編號
+         * 歌曲编号
          */
-        TextView tvIndex;
+        TextView tv_Index;
     }
 
     public ViewHolder vh;
@@ -109,7 +109,7 @@ public class MyListAdapter extends BaseAdapter {
         vh.tv_filename = (TextView) v.findViewById(R.id.tv_filename);
         vh.song = (TextView) v.findViewById(R.id.song);
         vh.im_indicator = (ImageView) v.findViewById(R.id.im_indicator);
-        vh.tvIndex = (TextView) v.findViewById(R.id.tv_index);
+        vh.tv_Index = (TextView) v.findViewById(R.id.tv_index);
         vh.btn_collection = (ImageView) v.findViewById(R.id.btn_collection);
         vh.iv_isPlaying = (ImageView) v.findViewById(R.id.iv_isPlaying);
         vh.iv_isPlaying.setBackgroundResource(R.drawable.lev_play_now);
@@ -121,15 +121,12 @@ public class MyListAdapter extends BaseAdapter {
 
     private void changeTextColor(ViewHolder vh, int color) {
         vh.song.setTextColor(mContext.getResources().getColor(color));
-        vh.tvIndex.setTextColor(mContext.getResources().getColor(color));
+        vh.tv_Index.setTextColor(mContext.getResources().getColor(color));
     }
 
     private void bindView(View v, final int position, ViewGroup parent) {
         final ViewHolder vh = (ViewHolder) v.getTag();
         String name, path;
-
-        vh.iv_isPlaying.setVisibility(View.GONE);
-
         /**
          *  收藏页面
          */
@@ -149,17 +146,18 @@ public class MyListAdapter extends BaseAdapter {
                 pathString = mTW.mLikeRecord.mLName[position - 1].mPath;
             }
             final boolean isEmpty = TextUtils.isEmpty(nameString);
-
             vh.song.setText(mTW.likeMusic.get(position).mName);
-            vh.tvIndex.setText(String.valueOf(position + 1));
+            vh.tv_Index.setText(String.valueOf(position + 1));
+
             if (mTW.mCurrentAPath.equals(mTW.likeMusic.get(position).mPath)) {
                 changeTextColor(vh, R.color.text_green);
                 vh.iv_isPlaying.setVisibility(View.VISIBLE);
             } else {
                 changeTextColor(vh, R.color.text_white);
+                vh.iv_isPlaying.setVisibility(View.INVISIBLE);
             }
             /*
-                从收藏列表中去除 /取消收藏
+             *   从收藏列表中去除 /取消收藏
              */
             vh.btn_collection.setOnClickListener(new OnClickListener() {
                 @Override
@@ -170,13 +168,16 @@ public class MyListAdapter extends BaseAdapter {
                                 MusicPresenter.mainView.showCollect(false);
                             }
                             CollectionUtils.removeMusicFromCollectionList(pathString, mTW.likeMusic);
-                        } else {
-                            if (mTW.mCurrentAPath.equals(pathString)) {
-                                MusicPresenter.mainView.showCollect(true);
-                            }
-                            CollectionUtils.addMusicToCollectionList(new MusicName(nameString, pathString), mTW.likeMusic);
                         }
-                        CollectionUtils.saveCollectionMusicList(mContext, mTW.likeMusic);
+                        CollectionUtils.saveCollectionMusicList(mContext,mTW.likeMusic);
+                        MusicName[] mLName = new MusicName[mTW.likeMusic.size()];
+                        for(int i = 0; i < mTW.likeMusic.size();i++){
+                            mLName[i] = new MusicName(mTW.likeMusic.get(i).mName,mTW.likeMusic.get(i).mPath);
+                        }
+                        mTW.mLikeRecord.mLName = mLName;
+                        mTW.mLikeRecord.mLength = mTW.likeMusic.size();
+                        mTW.mCList = mTW.mLikeRecord;
+                        mTW.mCList.mIndex = 4;
                         mTW.mCurrentPath = "/mnt/sdcard/iNand/.";
                         mTW.mPlaylistRecord.copyLName(mTW.mLikeRecord);
                         notifyDataSetChanged();
@@ -206,19 +207,16 @@ public class MyListAdapter extends BaseAdapter {
 
             if ((mTW.mCList.mLevel != 0) && (position == 0)) {
                 /**
-                 *  点开路径列表 需要加载的第一栏 路径
+                 *  点开路径列表1 需要加载的第一栏 路径
                  */
                 vh.tv_filename.setText(name);
                 vh.im_indicator.getDrawable().setLevel(1);
                 v.findViewById(R.id.item_close).setVisibility(View.VISIBLE);
                 v.findViewById(R.id.item_open).setVisibility(View.GONE);
             } else {
-                changeTextColor(vh, R.color.text_white);
-                vh.btn_collection.setVisibility(View.VISIBLE);
-                vh.iv_isPlaying.setVisibility(View.GONE);
                 if ((mTW.mCList.mLevel == 1) || (mTW.mCList.mIndex == 0)) {
                     /**
-                     * 点开了路径列表 需要加载的歌曲列表
+                     * 点开了路径列表2 需要加载的歌曲列表
                      */
                     v.findViewById(R.id.item_close).setVisibility(View.GONE);
                     v.findViewById(R.id.item_open).setVisibility(View.VISIBLE);
@@ -226,7 +224,11 @@ public class MyListAdapter extends BaseAdapter {
                     if ((path != null) && path.equals(mTW.mCurrentAPath)) {
                         changeTextColor(vh, R.color.text_green);
                         vh.iv_isPlaying.setVisibility(View.VISIBLE);
+                    } else {
+                        changeTextColor(vh, R.color.text_white);
+                        vh.iv_isPlaying.setVisibility(View.INVISIBLE);
                     }
+
                     if (CollectionUtils.itBeenCollected(mContext, pathString, mTW.likeMusic)) {
                         vh.btn_collection.getDrawable().setLevel(1);
                     } else {
@@ -234,13 +236,13 @@ public class MyListAdapter extends BaseAdapter {
                     }
 
                     if (mTW.mCList.mLevel != 0 && position != 0) {
-                        vh.tvIndex.setText(String.valueOf(position));
+                        vh.tv_Index.setText(String.valueOf(position));
                     } else {
-                        vh.tvIndex.setText(String.valueOf(position + 1));
+                        vh.tv_Index.setText(String.valueOf(position + 1));
                     }
                 } else {
                     /**
-                     * 默认打开list界面状态  只显示路径列表
+                     * 默认打开list界面/縮回只显示列表状态
                      */
                     v.findViewById(R.id.item_close).setVisibility(View.VISIBLE);
                     v.findViewById(R.id.item_open).setVisibility(View.GONE);

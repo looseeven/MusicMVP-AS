@@ -59,18 +59,20 @@ public class MusicPresenter implements Contarct.mainPresenter{
 	
 	@Override
 	public void onstart(final Context mContext) {
-		mTW = TWMusic.open();
 		this.mContext = mContext;
+		mTW = TWMusic.open();
 		fullScreen((Activity) mContext);
 		mAdapter = new MyListAdapter(mContext,mTW);
 		mTW.requestService(TWMusic.ACTIVITY_RUSEME);
 		mContext.bindService(new Intent(mContext, MusicService.class), mConnection, Context.BIND_AUTO_CREATE);
-		setVisualizerFxAndUi();	
+		setVisualizerFxAndUi();
+		getCollListRecord();
 		if (mTW!=null) {
 			mainView.showRepeat(mTW.mRepeat, 0);
 		}
 	}
-	
+
+
 	private Handler mHandler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
@@ -163,12 +165,12 @@ public class MusicPresenter implements Contarct.mainPresenter{
 	@Override
 	public void onresume() {
 		mTW.requestService(TWMusic.ACTIVITY_RUSEME);
-		CollectionUtils.getCollectionMusicList(mContext,mTW.likeMusic);
 		showFreqView = SharedPreferencesUtils.getBooleanPref(mContext, "music","showFreqView");
 		wallpoition = SharedPreferencesUtils.getIntPref(mContext, "id", "id");
 		mainView.showWallPaper(wallpoition);
 		mainView.showLrcorVis(showFreqView);
 		mainView.showListDrawer(mTW.mCList.mIndex);
+		Log.i("md","mTW.mCList.mIndex:  "+mTW.mCList.mIndex);
 		mainView.updateAdapterData(mAdapter);
 	}
 
@@ -300,7 +302,7 @@ public class MusicPresenter implements Contarct.mainPresenter{
 	@Override
 	public void setCollect() {
 		if(!TextUtils.isEmpty(mTW.mCurrentAPath)){ //判断路径是否为空
-			if (CollectionUtils.itBeenCollected(mContext, mTW.mCurrentAPath, mTW.likeMusic)) { 
+			if (CollectionUtils.itBeenCollected(mContext, mTW.mCurrentAPath, mTW.likeMusic)) {
 				if(((ImageView) mAdapter.ivLove) != null){
 					((ImageView) mAdapter.ivLove).getDrawable().setLevel(0);
 				}
@@ -315,23 +317,12 @@ public class MusicPresenter implements Contarct.mainPresenter{
 					CollectionUtils.addMusicToCollectionList(new MusicName(mService.getFileName(), mTW.mCurrentAPath), mTW.likeMusic);
 				}
 			}
+			getCollListRecord();
 			mAdapter.notifyDataSetChanged();
 			CollectionUtils.saveCollectionMusicList(mContext,mTW.likeMusic);
 		}
 	}
 
-
-	public static void collectList() {
-		MusicName[] mLName = new MusicName[mTW.likeMusic.size()];
-		for(int i = 0; i < mTW.likeMusic.size();i++){
-			mLName[i] = new MusicName(mTW.likeMusic.get(i).mName,mTW.likeMusic.get(i).mPath);
-		}
-		mTW.mLikeRecord.mLName = mLName;
-		mTW.mLikeRecord.mLength = mTW.likeMusic.size();
-		mTW.mCList = mTW.mLikeRecord;
-		mTW.mCList.mIndex = 4;
-		mAdapter.notifyDataSetChanged();
-	}
 
 	int onclick = -1;
 	public boolean isContinuousClick(int i){
@@ -400,7 +391,6 @@ public class MusicPresenter implements Contarct.mainPresenter{
 				mTW.mCList = mTW.mUSBRecord;
 			}
 		}
-		Log.i("md", "mTW.mUSBRecordLevel: "+mTW.mUSBRecordLevel);
 		mAdapter.notifyDataSetChanged();
 		isCollectMusic = false;
 	}
@@ -418,7 +408,15 @@ public class MusicPresenter implements Contarct.mainPresenter{
 	public void openCollectList() {
 		isContinuousClick(4);
 		mainView.showListDrawer(4);
-		collectList();
+		MusicName[] mLName = new MusicName[mTW.likeMusic.size()];
+		for(int i = 0; i < mTW.likeMusic.size();i++){
+			mLName[i] = new MusicName(mTW.likeMusic.get(i).mName,mTW.likeMusic.get(i).mPath);
+		}
+		mTW.mLikeRecord.mLName = mLName;
+		mTW.mLikeRecord.mLength = mTW.likeMusic.size();
+		mTW.mCList = mTW.mLikeRecord;
+		mTW.mCList.mIndex = 4;
+		mAdapter.notifyDataSetChanged();
 		isCollectMusic = true;
 	}
 
@@ -575,5 +573,16 @@ public class MusicPresenter implements Contarct.mainPresenter{
 			}
 		}
 	}
-	
+	/**
+	 * 获取收藏列表目录
+	 */
+	private void getCollListRecord(){
+		CollectionUtils.getCollectionMusicList(mContext,mTW.likeMusic);
+		MusicName[] mLName = new MusicName[mTW.likeMusic.size()];
+		for(int i = 0; i < mTW.likeMusic.size();i++){
+			mLName[i] = new MusicName(mTW.likeMusic.get(i).mName,mTW.likeMusic.get(i).mPath);
+		}
+		mTW.mLikeRecord.mLName = mLName;
+		mTW.mLikeRecord.mLength = mTW.likeMusic.size();
+	}
 }
